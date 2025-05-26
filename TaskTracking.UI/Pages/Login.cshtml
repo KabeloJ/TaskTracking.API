@@ -1,0 +1,60 @@
+﻿@page
+@model TaskTracking.UI.Pages.LoginModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TaskTracking.UI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TaskTracking.UI.styles.css" asp-append-version="true" />
+    <style>
+         .text-right{
+             text-align:right !important;
+         }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
+                </div>
+            }
+            <h4>Login</h4>
+            <div class="col-md-6">
+                <div class="col-md-8">
+                    <form method="post" asp-action="OnPost">
+                        <div>
+                            <label>Username</label>
+                            <input type="email" asp-for="@Model.Email" class="form-control form-control-sm" />
+                        </div>
+                        <div class="mt-2">
+                            <label>Password</label>
+                            <input type="password" asp-for="@Model.Password" class="form-control form-control-sm" />
+                        </div>
+                        <div class="mt-2 text-right">
+                            <a href="#">Forgot Password?</a>
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-sm btn-primary form-control">Login</button>
+                        </div>
+                        <div class="mt-2">
+                            <a href="Register" class="btn btn-sm btn-outline-primary form-control">Do not have an account? <b>Register here</b></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+﻿@page
+@model TaskTracking.UI.Pages.AddTaskModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] -Add Task</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TaskTracking.UI.styles.css" asp-append-version="true" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body style="height: fit-content; margin-bottom: unset;">
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+    <div class="col-md-6">
+        <div class="col-md-8  px-2">
+            <form method="post">
+                <div class="mt-2">
+                    <label>Title</label>
+                    <br />
+                    <span class="text-danger" asp-validation-for="Title"></span>
+                    <input type="text" class="form-control form-control-sm" asp-for="@Model.Title" />
+                </div>
+                <div class="mt-2">
+                    <label>Description</label>
+                    <br />
+                    <span class="text-danger" asp-validation-for="Description"></span>
+                    <textarea class="form-control form-control-sm" asp-for="@Model.Description"></textarea>
+                </div>
+                <div class="mt-2">
+                    <label id="dueDate">Due Date</label>
+                    <br />
+                    <span class="text-danger" asp-validation-for="DueDate"></span>
+                    <input type="datetime-local" class="form-control form-control-sm" asp-for="@Model.DueDate" />
+                </div>
+                <div class="mt-2">
+                    <div class="col-12" style="text-align: right;">
+                        <button class="btn btn-sm btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

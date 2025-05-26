@@ -1,0 +1,132 @@
+﻿@page "{id}"
+@model TaskTracking.UI.Pages.TaskPages.EditTaskModel
+@{
+
+}
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<style>
+    /* From Uiverse.io by Yaya12085 */
+    .divUpload {
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        gap: 5px;
+    }
+
+    .header {
+        flex: 1;
+        width: 100%;
+        border: 2px dashed royalblue;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+        .header svg {
+            height: 20px;
+        }
+
+        .header p {
+            text-align: center;
+            color: black;
+        }
+
+    #file {
+        display: none;
+    }
+</style>
+
+    <a href="/Index">Back</a>
+    <div class="col-md-8">
+
+    <form method="post">
+        <section class="row">
+            <div class="col-md-6">
+                <input asp-for="@Model.TaskId" type="hidden"/>
+                <input asp-for="@Model.AssignedUserId" type="hidden"/>
+                <div class="mt-2">
+                    <label>Title</label>
+                    <br />
+                    <span class="text-danger" asp-validation-for="Title"></span>
+                    <input type="text" class="form-control form-control-sm" asp-for="@Model.Title" />
+                </div>
+                <div class="mt-2">
+                    <label>Description</label>
+                    <br />
+                    <span class="text-danger" asp-validation-for="Description"></span>
+                    <textarea class="form-control form-control-sm" asp-for="@Model.Description"></textarea>
+                </div>
+                <div class="mt-2">
+                    <label id="dueDate">Due Date</label>
+                    <br />
+                    <span class="text-danger" asp-validation-for="DueDate"></span>
+                    <input type="datetime-local" class="form-control form-control-sm" asp-for="@Model.DueDate" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mt-2">
+                    <label>Assigned To</label>
+                    <input type="text" class="form-control form-control-sm" asp-for="@Model.AssignedUser" readonly />
+                </div>
+                <div class="mt-2">
+                    <label>Status</label>
+                    <select asp-for="@Model.Status" class="form-control form-control-sm">
+                        <option value="New">New</option>
+                        <option value="InProgress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Delayed">Delayed</option>
+                        <option value="Overdue">Overdue</option>
+                    </select>
+                </div>
+@*                 <div class="mt-2">
+                    <label>Supporting Files</label>
+                    <br />
+
+                    <label class="divUpload">
+                        <div class="header">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M7 10V9C7 6.23858 9.23858 4 12 4C14.7614 4 17 6.23858 17 9V10C19.2091 10 21 11.7909 21 14C21 15.4806 20.1956 16.8084 19 17.5M7 10C4.79086 10 3 11.7909 3 14C3 15.4806 3.8044 16.8084 5 17.5M7 10C7.43285 10 7.84965 10.0688 8.24006 10.1959M12 12V21M12 12L15 15M12 12L9 15" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </svg> <p id="uploadMsg">Browse File to upload!</p>
+                        </div>
+                    </label>
+                </div> *@
+            </div>
+        </section>
+        <div class="mt-2">
+            <div class="col-12" style="text-align: right;">
+                <button class="btn btn-sm btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        function validateFile(input) {
+            const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
+            const file = input.files[0];
+            console.log(file);
+            if (file && !allowedTypes.includes(file.type)) {
+                alert("Only PDF and image files (JPG, PNG) are allowed.");
+                input.value = "";
+                document.getElementById("uploadMsg").innerText = "Browse File to upload!";
+                document.getElementById("uploadMsg").removeAttribute("class");
+            }
+            else{
+                document.getElementById("uploadMsg").innerText = file.name;
+                document.getElementById("uploadMsg").setAttribute("class", "text-success");// = file.name;
+            }
+        }
+    </script>
+</div>
